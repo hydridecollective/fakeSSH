@@ -28,7 +28,7 @@
 
 # Authentication:
 
-LoginGraceTime 0
+LoginGraceTime 240
 PermitRootLogin no
 #StrictModes yes
 MaxAuthTries 65000
