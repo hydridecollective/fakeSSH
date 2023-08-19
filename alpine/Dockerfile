@@ -30,4 +30,6 @@ RUN mkdir -p /root/.ssh \
     && mkdir -p /run/openrc \
     && touch /run/openrc/softlevel
 
+RUN chmod +x /honeypotShell
+
 CMD [ "/bin/bash", "/start.sh" ]
