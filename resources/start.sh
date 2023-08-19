@@ -1,2 +1,2 @@
 #!/bin/bash
-sh -c "/usr/bin/sshd -De"
+sh -c "/usr/sbin/sshd -De"
