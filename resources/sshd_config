@@ -90,7 +90,7 @@ X11Forwarding no
 #X11UseLocalhost yes
 #PermitTTY yes
 #PrintMotd yes
-PrintLastLog no
+#PrintLastLog no
 #TCPKeepAlive yes
 #PermitUserEnvironment no
 #Compression delayed
