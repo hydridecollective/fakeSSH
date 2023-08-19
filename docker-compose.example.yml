@@ -1,0 +1,11 @@
+version: "3.7"
+
+services:
+  ssh:
+    build:
+      context: .
+      dockerfile: ./alpine/Dockerfile
+    container_name: ssh
+    ports:
+      - "2222:22"
+    restart: unless-stopped

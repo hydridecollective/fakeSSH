@@ -1,0 +1,50 @@
+#!/usr/bin/env python
+
+import os
+import signal
+import sys
+import atexit
+
+def main():
+    while True:
+        try:
+            try:
+                out = input("$ ")  # Read user input
+
+                # if empty input
+                if out == "":
+                    continue
+                # get command and arguments
+                out = out.split()
+                # get command
+                command = out[0]
+                # get arguments
+                args = out[1:]
+
+                if command == "exit":
+                    sys.exit(0)
+                elif command == "help":
+                    print("help: display this help message")
+                elif command == "echo":
+                    # echo
+                    print(" ".join(args))
+                else:
+                    print("WHAAAATT?? you actually thought this would work?? that's insane bro")
+
+            except Exception:
+                print("oops error")
+        except KeyboardInterrupt:
+            print('\n', end='')
+            continue
+
+def exit_handler():
+    print("bye lmao")
+
+# Register exit handler
+atexit.register(exit_handler)
+
+if __name__ == "__main__":
+    try:
+        main()  # Your script logic goes here
+    except KeyboardInterrupt:
+        print ("script interrupted LOL")

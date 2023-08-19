@@ -1,0 +1,3 @@
+# Gitignore
+# Remove docker-compose
+docker-compose.yml
