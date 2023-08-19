@@ -1,3 +1,4 @@
+**note: these might be outdated, will probably update at some point**
 # fakeSSH
 A Docker image running an SSH server, without access to host resources. Great for testing, honeypots, or for other purposes.
 

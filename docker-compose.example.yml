@@ -2,10 +2,28 @@ version: "3.7"
 
 services:
   ssh:
+    container_name: ssh
+    hostname: ssh
     build:
       context: .
       dockerfile: ./alpine/Dockerfile
-    container_name: ssh
+    restart: unless-stopped
+    networks:
+      - noInternet
+  tunnel:
+    container_name: tunnel
+    hostname: tunnel
+    build: "./tunnel"
+    restart: unless-stopped
     ports:
       - "2222:22"
-    restart: unless-stopped
+    networks:
+      - noInternet
+      - internet
+
+
+networks:
+  noInternet:
+    internal: true
+  internet:
+    internal: false

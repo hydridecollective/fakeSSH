@@ -1,3 +1,6 @@
 # Gitignore
 # Remove docker-compose
 docker-compose.yml
+
+## sshtunnel dir
+sshtunnel/
