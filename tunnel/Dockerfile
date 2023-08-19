@@ -23,6 +23,7 @@ RUN adduser -D -h /home/container -s /bin/bash container \
     && echo "container" | chsh -s /ssh.sh container \
     && mkdir -p /home/container \
     && chown -R container:container /home/container \
+    && chmod +x /ssh.sh \
     && chmod 0700 /home/container \
     && mkdir -p /home/container/.ssh \
     && chmod 0700 /home/container/.ssh \
