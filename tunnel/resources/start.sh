@@ -20,6 +20,7 @@ chmod 600 /data/auth/key
 # connect to ssh server
 cp -R /data/auth/key /tmp/key
 chmod 600 /tmp/key
+chown -R hydride:hydride /tmp/key
 
 # if an authorized_keys file doesn't exist, copy the public key to it
 if [ ! -f /data/auth/authorized_keys ]; then
