@@ -6,6 +6,7 @@ echo "SSH_USER=$SSH_USER" >> /env
 echo "SSH_PASSWORD=$SSH_PASSWORD" >> /env
 echo "SSH_PORT=$SSH_PORT" >> /env
 echo "SSH_USE_PASSWORD=$SSH_USE_PASSWORD" >> /env
+echo "SSH_KEY=$SSH_KEY" >> /env
 
 # check if ssh key exists at /data/auth. if one doesn't, generate an ED keypair
 mkdir -p /data/auth
@@ -17,7 +18,7 @@ fi
 
 chmod 600 /data/auth/key
 # connect to ssh server
-cp -R $SSH_KEY /tmp/key
+cp -R /data/auth/key /tmp/key
 chmod 600 /tmp/key
 
 # if an authorized_keys file doesn't exist, copy the public key to it
