@@ -6,4 +6,4 @@ if [ "$(id -u)" = "0" ]; then
     logout
 fi
 
-bash -c 'sshpass -p container ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null root@ssh'
+bash -c 'sshpass -p hydride ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null hydride@ssh'

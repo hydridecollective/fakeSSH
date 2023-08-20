@@ -7,12 +7,10 @@ FROM alpine:latest
 LABEL author="Hydride Collective"
 LABEL maintainer="dani@hydride.dev"
 
-ENV PUBKEY "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIi0KJNkFkZUUoSsiZod7XhJKDLWryo+D3SpOGxFPWOu"
-
 #RUN apk add --update git ffmpeg curl wget gnupg ca-certificates bind-tools sqlite python3 tzdata xz libatomic bash zsh alpine-sdk sudo nano util-linux shadow openssh rsync
 RUN apk add gnupg ca-certificates bind-tools bash zsh sudo nano util-linux shadow openssh rsync python3 iptables
 RUN echo "root:container" | chpasswd
-RUN echo "container" | chsh -s /honeypotShell
+RUN echo "container" | chsh -s /sbin/nologin
 
 COPY ./resources/start.sh /start.sh
 COPY ./resources/honeypotShell /honeypotShell
@@ -29,6 +27,20 @@ RUN mkdir -p /root/.ssh \
     #&& echo -e "PasswordAuthentication no" >> /etc/ssh/sshd_config \
     && mkdir -p /run/openrc \
     && touch /run/openrc/softlevel
+
+# make hydride user, ensure it has its' own home directory
+RUN adduser -D -h /home/hydride -s /bin/bash hydride \
+    && echo "hydride:hydride" | chpasswd \
+    && echo "container" | chsh -s /honeypotShell hydride \
+    && mkdir -p /home/hydride
+
+RUN chown -R hydride:hydride /home/hydride \
+    && chmod 0700 /home/hydride \
+    && mkdir -p /home/hydride/.ssh \
+    && chmod 0700 /home/hydride/.ssh \
+    && chown -R hydride:hydride /home/hydride/.ssh \
+    && echo "" > /home/hydride/.ssh/authorized_keys \
+    && chmod 0600 /home/hydride/.ssh/authorized_keys
 
 RUN chmod +x /honeypotShell
 

@@ -19,7 +19,7 @@ COPY ./resources/sshd_config /etc/ssh/sshd_config
 
 # make hydride user, ensure it has its' own home directory
 RUN adduser -D -h /home/hydride -s /bin/bash hydride \
-    && echo "hydride:container" | chpasswd \
+    && echo "hydride:hydride" | chpasswd \
     && echo "container" | chsh -s /ssh.sh hydride \
     && mkdir -p /home/hydride
 
