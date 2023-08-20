@@ -3,4 +3,4 @@
 docker-compose.yml
 
 ## sshtunnel dir
-sshtunnel/
+data/

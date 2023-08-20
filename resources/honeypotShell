@@ -3,121 +3,172 @@
 import sys
 import atexit
 import time
+import readline
 import random
 
+# global vars
+TGREEN = '\033[32m'   # Green text
+TRED = '\033[31m'     # Red text
+TYELLOW = '\033[33m'  # Yellow text
+TBLUE = '\033[34m'    # Blue text
+TMAGENTA = '\033[35m' # Magenta text
+TCYAN = '\033[36m'    # Cyan text
+TWHITE = '\033[37m'   # White text
+TDEFAULT = '\033[m'   # Revert
 
-def handler(command, args):
-
-    if command == "exit":
-        sys.exit(0)
-    elif command == "help":
-        print("help: display this help message")
-    elif command == "echo":
-        # if
-
-        # echo
-        print(" ".join(args))
-    elif command == "download" and args[0] == "more" and args[1] == "ram":
-        print("downloading more ram...")
-        # sleep for 5 seconds
-        time.sleep(5)
-        print("download complete check mark check mark")
-    elif command == "ls":
-        print("ls?")
-    elif command == "cd":
-        # generate rand int
-        randInt = random.randint(1, 2)
-
-        # if rand int is 1
-        if randInt == 1:
-            if args[0] == "..":
-                currentDir = "~"
-            elif len(args) == 0:
-                return
-            elif args[0] == "eez nuts":
-                print("c? cd? cdeeznuts")
-            else:
-                currentDir = "/" + args[0]
-        elif randInt == 2:
-            print("cd? more like cdeeznuts")
-        else:
-            print("cd? more like cdeeznuts")
-    elif command == "uname":
-        if len(args) == 0:
-            randInt = random.randint(1, 2)
-            # if rand int is 1
-            if randInt == 1:
-                print("BSD")
-            elif randInt == 2:
-                print("GNU Hurd")
-            else:
-                print("BSD")
-        elif args[0] == "-a" or args[0] == "--all":
-            print(
-                "BSD littlemansyndrome.com NT 6.2-22621.2134._el10_4.armv8a #2 LifeSteal STATIC_DEEZ_NUTS Tue 20 April 2027 4:20:69 AM BST armv8l armv8l armv8l GNU/Hurd"
-            )
-        elif args[0] == "-m" or args[0] == "--machine":
-            print("armv8l")
-        elif args[0] == "-n" or args[0] == "--nodename":
-            print("littlemansyndrome.com")
-        elif args[0] == "-r" or args[0] == "--release":
-            print("6.2-22621.2134._el10_4.armv8a")
-        elif args[0] == "-s" or args[0] == "--sysname":
-            print("BSD")
-        elif args[0] == "-v" or args[0] == "--version":
-            print("6.2-22621.2134._el10_4.armv8a")
-        elif args[0] == "-p" or args[0] == "--processor":
-            print("armv8l")
-        else:
-            print("uname: invalid option -- 'f'")
-            print("Try 'uname --help' for more information.")
-    elif command == "cat":
-        print(
-            f"""
-("`-''-/").___..--''"`-._ 
-
- `6_ 6  )   `-.  (     ).`-.__.`) 
-
- (_Y_.)'  ._   )  `._ `. ``-..-' 
-
-   _..`--'_..-_/  /--'_.'
-
-  ((((.-''  ((((.'  (((.-'
-                    """
-        )
-    elif command == "dnf":
-        randInt = random.randint(1, 3)
-        if randInt == 1:
-            print("dnf? more like d-d-deeznuts")
-        elif randInt == 2:
-            print("dnf? like the minecraft youtubers??")
-        elif randInt == 3:
-            print("dream x george <333333")
-    elif command == "npm":
-        print("yo mom so fat cos the node_modules folder too big on her ass")
-        # for legal reasons this one was written and reflects the opinions of the following:
-        # dani hyders <dani@hydride.dev>
-    elif command == "yarn":
-        print(
-            "why'd the ca--just kidding. this one doesn't get a joke. yarn's too good"
-        )
-    elif command == "apt":
-        print(
-            "i took an aptitude test and i failed and thats why u cant use this command lol"
-        )
-    elif command == "portage":
-        print("if you thought this system ran gentoo, you're on copium bro")
-    else:
-        print("WHAAAATT?? you actually thought this would work?? that's insane bro")
+# from https://stackoverflow.com/questions/29960634/reload-the-currently-running-python-script
+# kudos to medecau
+def refresh():
+    with open(__file__) as fo:
+        source_code = fo.read()
+        byte_code = compile(source_code, __file__, "exec")
+        exec(byte_code)
 
 
 def main():
+    def handler(command, args):
+        if command == "exit" or command == "logout":
+            print(f"ok bye {TCYAN}:({TDEFAULT}")
+            sys.exit(0)
+        elif command == "help":
+            print("help: display this help message")
+        elif command == "echo":
+            # if
+
+            # echo
+            print(" ".join(args))
+        elif command == "download" and args[0] == "more" and args[1] == "ram":
+            print("downloading more ram...")
+            # sleep for 5 seconds
+            time.sleep(5)
+            print("download complete check mark check mark")
+        elif command == "ls":
+            print("ls?")
+        elif command == "cd":
+            # generate rand int
+            randInt = random.randint(1, 2)
+
+            # if rand int is 1
+            if randInt == 1:
+                if args[0] == "..":
+                    currentDir = "~"
+                elif len(args) == 0:
+                    return
+                elif args[0] == "eez nuts":
+                    print("c? cd? cdeeznuts")
+                else:
+                    currentDir = "/" + args[0]
+            elif randInt == 2:
+                print("cd? more like cdeeznuts")
+            else:
+                print("cd? more like cdeeznuts")
+        elif command == "uname":
+            if len(args) == 0:
+                randInt = random.randint(1, 2)
+                # if rand int is 1
+                if randInt == 1:
+                    print("BSD")
+                elif randInt == 2:
+                    print("GNU Hurd")
+                else:
+                    print("BSD")
+            elif args[0] == "-a" or args[0] == "--all":
+                print(
+                    "BSD littlemansyndrome.com NT 6.2-22621.2134._el10_4.armv8a #2 LifeSteal STATIC_DEEZ_NUTS Tue 20 April 2027 4:20:69 AM BST armv8l armv8l armv8l GNU/Hurd"
+                )
+            elif args[0] == "-m" or args[0] == "--machine":
+                print("armv8l")
+            elif args[0] == "-n" or args[0] == "--nodename":
+                print("littlemansyndrome.com")
+            elif args[0] == "-r" or args[0] == "--release":
+                print("6.2-22621.2134._el10_4.armv8a")
+            elif args[0] == "-s" or args[0] == "--sysname":
+                print("BSD")
+            elif args[0] == "-v" or args[0] == "--version":
+                print("6.2-22621.2134._el10_4.armv8a")
+            elif args[0] == "-p" or args[0] == "--processor":
+                print("armv8l")
+            else:
+                print("uname: invalid option -- 'f'")
+                print("Try 'uname --help' for more information.")
+        elif command == "cat":
+            print(
+                f"""
+    ("`-''-/").___..--''"`-._ 
+
+    `6_ 6  )   `-.  (     ).`-.__.`) 
+
+    (_Y_.)'  ._   )  `._ `. ``-..-' 
+
+    _..`--'_..-_/  /--'_.'
+
+    ((((.-''  ((((.'  (((.-'
+                        """
+            )
+        elif command == "dnf":
+            randInt = random.randint(1, 3)
+            if randInt == 1:
+                print("dnf? more like d-d-deeznuts")
+            elif randInt == 2:
+                print("dnf? like the minecraft youtubers??")
+            elif randInt == 3:
+                print("dream x george <333333")
+        elif command == "npm":
+            print("yo mom so fat cos the node_modules folder too big on her ass")
+            # for legal reasons this one was written and reflects the opinions of the following:
+            # dani hyders <dani@hydride.dev>
+        elif command == "yarn":
+            print(
+                "why'd the ca--just kidding. this one doesn't get a joke. yarn's too good"
+            )
+        elif command == "apt":
+            print(
+                "i took an aptitude test and i failed and thats why u cant use this command lol"
+            )
+        elif command == "portage":
+            print("if you thought this system ran gentoo, you're on copium bro")
+        elif command == "history":
+            history_length = readline.get_history_length()
+            print("history length: " + str(history_length))
+        elif command == "df" or command == "free" or command == "du":
+            if len(args) != 0:
+                if args[0] == "-h":
+                    LMFAO = TCYAN + "L" + TBLUE + "M" + TRED + "F" + TGREEN + "A" + TMAGENTA + "O"
+                    print("*ahem* in human terms: " + TRED + "THAT'S NUNYA BUSINESS " + LMFAO + TDEFAULT)
+            else:
+                print(TRED + "Hello there! You do not have permission to execute this command. (run with -h)" + TDEFAULT)
+        elif command == "neofetch" or command == "screenfetch":
+            print(f"""
+            {TCYAN}.-/+oossssoo+/-.{TDEFAULT}
+        {TRED}`:+ssssssssssssssssss+:`{TDEFAULT}
+      {TCYAN}-+ssssssssssssssssssyyssss+-{TDEFAULT}
+    {TRED}.ossssssssssssssssssdMMMNysssso.{TDEFAULT}
+   {TCYAN}/ssssssssssshdmmNNmmyNMMMMhssssss/{TDEFAULT}
+  {TRED}+ssssssssshmydMMMMMMMNddddyssssssss+{TDEFAULT}
+ {TCYAN}/sssssssshNMMMyhhyyyyhmNMMMNhssssssss/{TDEFAULT}        {TGREEN}user{TDEFAULT}@{TCYAN}ISN'T THIS OBVIOUS ALREADY{TDEFAULT}
+{TRED}.ssssssssdMMMNhsssssssssshNMMMdssssssss.{TDEFAULT}       --------- 
+{TCYAN}+sssshhhyNMMNyssssssssssssyNMMMysssssss+{TDEFAULT}       {TYELLOW}OS{TDEFAULT}: Ubuntu 22.06.9 BTS
+{TRED}ossyNMMMNyMMhsss{TYELLOW}yooouuuu{TRED}ssssshmmmhssssssso{TDEFAULT}     {TYELLOW}Kernel{TDEFAULT}: FreeBSD Microsoft Windows NT 6.2-22621.2134._el10_4.armv8a
+{TCYAN}ossyNMMMNyMMhss{TYELLOW}ttthhouughht{TCYAN}ssshmmmhssssssso{TDEFAULT}    {TYELLOW}Uptime{TDEFAULT}: in 2 kilometres, turn {TCYAN}right{TDEFAULT} onto 10 downing street
+{TRED}+sssshhhyNMMNysn{TYELLOW}LMMMFAOOOO{TRED}ssyNMMMysssssss+{TDEFAULT}     {TYELLOW}Packages{TDEFAULT}: 784 (rpm), 2741 (snap), 8912 (flatpak), -2 (pacman) 
+{TCYAN}.ssssssssdMMMNhsssssssssshNMMMdssssssss.{TDEFAULT}       {TYELLOW}Shell{TDEFAULT}: honeypotd
+ {TRED}/sssssssshNMMMyhhyyyyhdNMMMNhssssssss/{TDEFAULT}        {TYELLOW}Theme{TDEFAULT}: Adwaita Dark [GTK 5]
+  {TCYAN}+sssssssssdmydMMMMMMMMddddyssssssss+{TDEFAULT}         {TYELLOW}Icons{TDEFAULT}: Breeze Light [QT 7]
+   {TRED}/ssssssssssshdmNNNNmyNMMMMhssssss/{TDEFAULT}          {TYELLOW}Terminal{TDEFAULT}: pot-terminal
+    {TCYAN}.ossssssssssssssssssdMMMNysssso.{TDEFAULT}           {TYELLOW}CPU{TDEFAULT}: Qualcomm Snapdragon 8 Gen 2 for Galaxy
+      {TRED}-+sssssssssssssssssyyyssss+-{TDEFAULT}             {TYELLOW}GPU{TDEFAULT}: abcd4847:1211 (Jensen HuangTX 42000Ti Founders Edition)
+        {TCYAN}`:+ssssssssssssssssss+:`{TDEFAULT}               {TYELLOW}Memory{TDEFAULT}: the number 7
+           {TRED} .-/+oossssoo+/-.{TDEFAULT}                                   
+            {TDEFAULT}""")
+        else:
+            print("WHAAAATT?? you actually thought this would work?? that's insane bro")
+
     currentDir = "~"
 
     while True:
         try:
             try:
-                out = input("hydride@ssh:" + currentDir + "$ ")
+                out = input(TGREEN + "userlittlemansyndrome:" + TCYAN + currentDir + TDEFAULT + "$ ")
                 if out == "":
                     continue
                 # get command and arguments
@@ -126,23 +177,22 @@ def main():
                 command = out[0]
                 # get arguments
                 args = out[1:]
-                handler(command, args)
+                if command == "reload":
+                    try:
+                        print("task failed successfully")
+                        refresh()
+                    except Exception as e:
+                        print("task successfully failed (reload-specific)")
+                else:
+                    handler(command, args)
             except Exception:
-                print("oops error")
+                print("task successfully failed")
         except KeyboardInterrupt:
             print("\n", end="")
             continue
 
-
-def exit_handler():
-    print("bye lmao")
-
-
-# Register exit handler
-atexit.register(exit_handler)
-
 if __name__ == "__main__":
     try:
-        main()  # Your script logic goes here
+        main()
     except KeyboardInterrupt:
         print("script interrupted LOL")

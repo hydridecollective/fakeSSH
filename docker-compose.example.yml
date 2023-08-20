@@ -8,6 +8,10 @@ services:
       context: .
       dockerfile: ./alpine/Dockerfile
     restart: unless-stopped
+    environment:
+      - SSH_USE_PASSWORD=false
+    volumes:
+      - "./data:/data"
     networks:
       - noInternet
   tunnel:
@@ -15,6 +19,14 @@ services:
     hostname: tunnel
     build: "./tunnel"
     restart: unless-stopped
+    environment:
+      - SSH_HOST=ssh
+      - SSH_PORT=22
+      - SSH_USER=sshUser
+      - SSH_PASSWORD=sshUser
+      - SSH_USE_PASSWORD=false
+    volumes:
+      - "./data:/data"
     ports:
       - "2222:22"
     networks:

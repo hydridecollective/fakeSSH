@@ -8,6 +8,7 @@ FROM alpine:latest
 LABEL author="Hydride Collective"
 LABEL maintainer="dani@hydride.dev"
 
+
 #RUN apk add --update git ffmpeg curl wget gnupg ca-certificates bind-tools sqlite python3 tzdata xz libatomic bash zsh alpine-sdk sudo nano util-linux shadow openssh rsync
 RUN apk add gnupg ca-certificates bind-tools bash zsh sudo nano util-linux shadow openssh rsync iptables sshpass
 RUN echo "root:container" | chpasswd
@@ -42,4 +43,4 @@ RUN mkdir -p /root/.ssh \
 
 RUN rm -rf /etc/motd
 
-CMD [ "/bin/bash", "/start.sh" ]
+ENTRYPOINT [ "/start.sh" ]

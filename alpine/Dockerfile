@@ -4,8 +4,8 @@
 
 FROM alpine:latest
 
-LABEL author="Hydride Collective"
-LABEL maintainer="dani@hydride.dev"
+LABEL author="${USER} Collective"
+LABEL maintainer="dani@${USER}.dev"
 
 #RUN apk add --update git ffmpeg curl wget gnupg ca-certificates bind-tools sqlite python3 tzdata xz libatomic bash zsh alpine-sdk sudo nano util-linux shadow openssh rsync
 RUN apk add gnupg ca-certificates bind-tools bash zsh sudo nano util-linux shadow openssh rsync python3 iptables
@@ -18,6 +18,9 @@ COPY ./resources/issue.net /etc/issue.net
 COPY ./resources/sshd_config /etc/ssh/sshd_config
 COPY ./resources/motd /etc/motd
 
+ENV USER=sshUser
+ENV PASSWORD=sshUser
+
 RUN mkdir -p /root/.ssh \
     && chmod 0700 /root/.ssh \
     && passwd -u root \
@@ -28,19 +31,19 @@ RUN mkdir -p /root/.ssh \
     && mkdir -p /run/openrc \
     && touch /run/openrc/softlevel
 
-# make hydride user, ensure it has its' own home directory
-RUN adduser -D -h /home/hydride -s /bin/bash hydride \
-    && echo "hydride:hydride" | chpasswd \
-    && echo "container" | chsh -s /honeypotShell hydride \
-    && mkdir -p /home/hydride
+# make ${USER}, ensure it has its' own home directory
+RUN adduser -D -h /home/${USER} -s /bin/bash ${USER} \
+    && echo "${USER}:${PASSWORD}" | chpasswd \
+    && echo "container" | chsh -s /honeypotShell ${USER} \
+    && mkdir -p /home/${USER}
 
-RUN chown -R hydride:hydride /home/hydride \
-    && chmod 0700 /home/hydride \
-    && mkdir -p /home/hydride/.ssh \
-    && chmod 0700 /home/hydride/.ssh \
-    && chown -R hydride:hydride /home/hydride/.ssh \
-    && echo "" > /home/hydride/.ssh/authorized_keys \
-    && chmod 0600 /home/hydride/.ssh/authorized_keys
+RUN chown -R ${USER}:${USER} /home/${USER} \
+    && chmod 0700 /home/${USER} \
+    && mkdir -p /home/${USER}/.ssh \
+    && chmod 0700 /home/${USER}/.ssh \
+    && chown -R ${USER}:${USER} /home/${USER}/.ssh \
+    && echo "" > /home/${USER}/.ssh/authorized_keys \
+    && chmod 0600 /home/${USER}/.ssh/authorized_keys
 
 RUN chmod +x /honeypotShell
 
