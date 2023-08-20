@@ -29,8 +29,5 @@ fi
 if [ "$SSH_USE_PASSWORD" = "true" ]; then
     bash -c "sshpass -p $SSH_PASSWORD ssh -o LogLevel=error -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -p $SSH_PORT $SSH_USER@$SSH_HOST"
 else
-    # connect to ssh server
-    cp -R $SSH_KEY /tmp/key
-    chmod 600 /tmp/key
     ssh -o StrictHostKeyChecking=no -oLogLevel=error -p $SSH_PORT -i /tmp/key $SSH_USER@$SSH_HOST
 fi

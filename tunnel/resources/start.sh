@@ -16,6 +16,9 @@ if [ ! -f /data/auth/key ]; then
 fi
 
 chmod 600 /data/auth/key
+# connect to ssh server
+cp -R $SSH_KEY /tmp/key
+chmod 600 /tmp/key
 
 # if an authorized_keys file doesn't exist, copy the public key to it
 if [ ! -f /data/auth/authorized_keys ]; then
