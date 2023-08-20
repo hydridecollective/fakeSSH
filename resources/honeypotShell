@@ -168,7 +168,7 @@ def main():
     while True:
         try:
             try:
-                out = input(TGREEN + "userlittlemansyndrome:" + TCYAN + currentDir + TDEFAULT + "$ ")
+                out = input(TGREEN + "user@littlemansyndrome:" + TCYAN + currentDir + TDEFAULT + "$ ")
                 if out == "":
                     continue
                 # get command and arguments
