@@ -17,19 +17,20 @@ COPY ./resources/start.sh /start.sh
 COPY ./resources/ssh.sh /ssh.sh
 COPY ./resources/sshd_config /etc/ssh/sshd_config
 
-# make container user, ensure it has its' own home directory
-RUN adduser -D -h /home/container -s /bin/bash container \
-    && echo "container:container" | chpasswd \
-    && echo "container" | chsh -s /ssh.sh container \
-    && mkdir -p /home/container \
-    && chown -R container:container /home/container \
+# make hydride user, ensure it has its' own home directory
+RUN adduser -D -h /home/hydride -s /bin/bash hydride \
+    && echo "hydride:container" | chpasswd \
+    && echo "container" | chsh -s /ssh.sh hydride \
+    && mkdir -p /home/hydride
+
+RUN chown -R hydride:hydride /home/hydride \
     && chmod +x /ssh.sh \
-    && chmod 0700 /home/container \
-    && mkdir -p /home/container/.ssh \
-    && chmod 0700 /home/container/.ssh \
-    && chown -R container:container /home/container/.ssh \
-    && echo "" > /home/container/.ssh/authorized_keys \
-    && chmod 0600 /home/container/.ssh/authorized_keys
+    && chmod 0700 /home/hydride \
+    && mkdir -p /home/hydride/.ssh \
+    && chmod 0700 /home/hydride/.ssh \
+    && chown -R hydride:hydride /home/hydride/.ssh \
+    && echo "" > /home/hydride/.ssh/authorized_keys \
+    && chmod 0600 /home/hydride/.ssh/authorized_keys
 
 RUN mkdir -p /root/.ssh \
     && chmod 0700 /root/.ssh \
