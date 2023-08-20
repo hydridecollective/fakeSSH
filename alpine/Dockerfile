@@ -46,5 +46,6 @@ RUN chown -R ${USER}:${USER} /home/${USER} \
     && chmod 0600 /home/${USER}/.ssh/authorized_keys
 
 RUN chmod +x /honeypotShell
+RUN chmod +x /start.sh
 
 CMD [ "/bin/bash", "/start.sh" ]

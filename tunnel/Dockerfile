@@ -42,5 +42,6 @@ RUN mkdir -p /root/.ssh \
     && touch /run/openrc/softlevel
 
 RUN rm -rf /etc/motd
+RUN chmod +x /start.sh
 
 ENTRYPOINT [ "/start.sh" ]
