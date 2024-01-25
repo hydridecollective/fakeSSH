@@ -14,6 +14,8 @@ services:
       - "./data:/data"
     networks:
       - noInternet
+    security_opt:
+      - "no-new-privileges:true"
   tunnel:
     container_name: tunnel
     hostname: tunnel
@@ -32,6 +34,8 @@ services:
     networks:
       - noInternet
       - internet
+    security_opt:
+      - "no-new-privileges:true"
 
 
 networks:
